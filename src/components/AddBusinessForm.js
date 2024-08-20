@@ -10,7 +10,7 @@ const AddBusinessForm = ({ onBusinessAdded }) => {
         e.preventDefault();
         try {
             const newBusiness = { name, address, category };
-            const response = await axios.post('/api/become-a-creator', newBusiness);
+            const response = await axios.post('/', newBusiness);
             onBusinessAdded(response.data);
             setName('');
             setAddress('');
@@ -21,35 +21,38 @@ const AddBusinessForm = ({ onBusinessAdded }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="form-container">
-            <div className="form-group">
-                <label>Name</label>
+        <form onSubmit={handleSubmit} className="mb-4 p-4 border rounded">
+           <div className="mb-2">
+                <label className="block text-sm font-medium text-gray-700">Name</label>
                 <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded"
                     required
                 />
             </div>
-            <div className="form-group">
-                <label>Address</label>
+            <div className="mb-2">
+                <label className="block text-sm font-medium text-gray-700">Address</label>
                 <input
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded"
                     required
                 />
             </div>
-            <div className="form-group">
-                <label>Category</label>
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700">Category</label>
                 <input
                     type="text"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded"
                     required
                 />
             </div>
-            <button type="submit" className="submit-button">
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
                 Add Business
             </button>
         </form>
