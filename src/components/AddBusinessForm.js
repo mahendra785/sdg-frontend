@@ -10,7 +10,7 @@ const AddBusinessForm = ({ onBusinessAdded }) => {
         e.preventDefault();
         try {
             const newBusiness = { name, address, category };
-            const response = await axios.post('/', newBusiness);
+            const response = await axios.post('/api/become-a-creator', newBusiness);
             onBusinessAdded(response.data);
             setName('');
             setAddress('');
