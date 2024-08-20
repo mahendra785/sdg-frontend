@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const BecomeSellerForm = ({ onClose }) => {
+const AddBusinessForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
-    businessName: '',
-    email: '',
-    address: '',
-    category: '',
+    name: '',
     description: '',
+    contactEmail: '',
+    contactPhone: '',
+    address: '',
+    website: '',
+    category: '',
+    products: '',
   });
 
   const handleChange = (e) => {
@@ -18,10 +21,31 @@ const BecomeSellerForm = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    onClose();
+    try {
+      const newBusiness = {
+        ...formData,
+        products: formData.products.split(',').map(product => product.trim()), // Convert comma-separated string to array
+      };
+      const response = await fetch('http://localhost:4000/api/become-a-creator', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newBusiness),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      
+      const data = await response.json();
+      console.log(data);
+      onClose();
+    } catch (error) {
+      console.error('Error adding business', error);
+    }
   };
 
   return (
@@ -34,15 +58,15 @@ const BecomeSellerForm = ({ onClose }) => {
         className="bg-gradient-to-br from-green-400 to-green-600 rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto"
       >
         <div className="p-8">
-          <h2 className="text-white text-3xl font-bold mb-6">Become a Seller</h2>
+          <h2 className="text-white text-3xl font-bold mb-6">Add Your Business</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-white text-lg mb-2" htmlFor="businessName">Business Name</label>
+              <label className="block text-white text-lg mb-2" htmlFor="name">Business Name</label>
               <input
                 type="text"
-                id="businessName"
-                name="businessName"
-                value={formData.businessName}
+                id="name"
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 className="w-full p-3 rounded-md bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 placeholder="Your Business Name"
@@ -50,15 +74,42 @@ const BecomeSellerForm = ({ onClose }) => {
               />
             </div>
             <div>
-              <label className="block text-white text-lg mb-2" htmlFor="email">Email Address</label>
+              <label className="block text-white text-lg mb-2" htmlFor="description">Description (max 150 words)</label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                placeholder="Describe your business..."
+                maxLength={150}
+                rows={4}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-white text-lg mb-2" htmlFor="contactEmail">Contact Email</label>
               <input
                 type="email"
-                id="email"
-                name="email"
-                value={formData.email}
+                id="contactEmail"
+                name="contactEmail"
+                value={formData.contactEmail}
                 onChange={handleChange}
                 className="w-full p-3 rounded-md bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 placeholder="Your Email"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-white text-lg mb-2" htmlFor="contactPhone">Contact Phone</label>
+              <input
+                type="tel"
+                id="contactPhone"
+                name="contactPhone"
+                value={formData.contactPhone}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                placeholder="Your Phone Number"
                 required
               />
             </div>
@@ -73,6 +124,18 @@ const BecomeSellerForm = ({ onClose }) => {
                 className="w-full p-3 rounded-md bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                 placeholder="Your Address"
                 required
+              />
+            </div>
+            <div>
+              <label className="block text-white text-lg mb-2" htmlFor="website">Website</label>
+              <input
+                type="url"
+                id="website"
+                name="website"
+                value={formData.website}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                placeholder="Your Website URL"
               />
             </div>
             <div>
@@ -92,17 +155,15 @@ const BecomeSellerForm = ({ onClose }) => {
               </select>
             </div>
             <div>
-              <label className="block text-white text-lg mb-2" htmlFor="description">Description (max 150 words)</label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
+              <label className="block text-white text-lg mb-2" htmlFor="products">Products (comma separated)</label>
+              <input
+                type="text"
+                id="products"
+                name="products"
+                value={formData.products}
                 onChange={handleChange}
                 className="w-full p-3 rounded-md bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
-                placeholder="Describe your business..."
-                maxLength={150}
-                rows={4}
-                required
+                placeholder="List your products..."
               />
             </div>
             <div className="flex justify-end space-x-4">
@@ -131,4 +192,4 @@ const BecomeSellerForm = ({ onClose }) => {
   );
 };
 
-export default BecomeSellerForm;
+export default AddBusinessForm;
