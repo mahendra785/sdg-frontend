@@ -46,7 +46,9 @@ const ReuseReduceRecycle = () => {
       {/* Right side with arrow and text */}
       <div className="w-1/2 flex flex-col justify-center items-center p-6 cursor-pointer">
         <p className="text-2xl font-bold text-green-800 mb-4 text-center">View Nearby Eco-Friendly Sellers</p>
+        <a href='/list' className="text-green-800 hover:text-green-900 text-2xl font-bold text-center">
         <ArrowRight size={120} className="text-green-800 animate-pulse hover:scale-105" />
+        </a>
       </div>
     </div>
   );

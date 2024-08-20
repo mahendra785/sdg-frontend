@@ -32,13 +32,15 @@ const Navbar = () => {
           <div className="hidden md:flex space-x-4">
             <button
               onClick={() => setIsFormOpen(true)} // Open form on click
-              className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
+              className="bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
             >
               Become a Seller
             </button>
+            <a href='/contactus'>
             <button className="bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition duration-300 ease-in-out transform hover:scale-105">
               Contact Us
             </button>
+            </a>
           </div>
         </div>
 
