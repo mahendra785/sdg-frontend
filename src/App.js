@@ -15,7 +15,9 @@ function App() {
         Join us in our mission to create a sustainable future! 🌍
       </div>
       <div className="flex align-right transform scale-75 overflow-none">
+        <a href="https://www.acmvit.in/ ">
         <ACMLogo />
+        </a>
       </div>
     </div>
   </div>
